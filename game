@@ -1,0 +1,42 @@
+import pygame
+
+RESOLUTION = (800, 600)
+
+def main():
+    pygame.init()
+
+# Create window
+    window = pygame.display.set_mode(RESOLUTION)
+    pygame.display.set_caption("Collision Game")
+    speed = 20
+
+    running = True
+    while running:
+        
+        rect = pygame.draw.rect (window, (255, 0, 0), (50, 50, 50, 50))
+
+        for event in pygame.event.get():
+            if event.type == pygame.QUIT:  # Handle window close
+                running = False
+
+            elif event.type == pygame.KEYDOWN:
+                if event.key == pygame.K_LEFT:
+                    rect.x -= speed
+                elif event.key == pygame.K_RIGHT:
+                    rect.x += speed
+                elif event.key == pygame.K_UP:
+                    rect.y -= speed
+                elif event.key == pygame.K_DOWN:
+                    rect.y += speed
+
+        
+
+
+            
+                if event.key == pygame.K_a:
+                    print("A is being pressed!")
+
+        pygame.display.update()
+
+    pygame.quit()
+main()
