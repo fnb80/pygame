@@ -28,13 +28,18 @@ def main():
                     rect.y -= speed
                 elif event.key == pygame.K_DOWN:
                     rect.y += speed
-
-        
-
-
             
                 if event.key == pygame.K_a:
                     print("A is being pressed!")
+
+font = pygame.font.SysFont("Comic Sans MS", 40)  
+#font = pygame.font.SysFont("Comic Sans MS", 40, bold=True, italic=True)
+
+text_surface = font.render("Hello, Pygame!", True, (255, 0, 0))
+
+window.fill((255, 255, 255))  # Clear screen
+window.blit(text_surface, (100, 100))  # Draw text at (100,100)
+
 
         pygame.display.update()
 
