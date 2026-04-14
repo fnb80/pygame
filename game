@@ -14,7 +14,7 @@ def main():
     rect = pygame.Rect(50, 50, 50, 50)
 
     # Font and text setup
-    font = pygame.font.SysFont("Comic Sans MS", 40)
+    font = pygame.font.SysFont("Courier", 40)
     score = 0
     text_surface = font.render(f"Score: {score}", True, (255, 0, 0))
 
