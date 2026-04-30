@@ -1,0 +1,87 @@
+import pygame, random
+
+#make window
+RESOLUTION = (800, 600)
+
+running = True
+collision = False
+
+#function for moving the target to a random location on the screen after each collision, ensuring it stays within the window boundaries
+def move_target():
+    x = random.randint(0, RESOLUTION[0] - 50)
+    y = random.randint(0, RESOLUTION[1] - 50)
+    return pygame.Rect(x, y, 50, 50)
+
+def main():
+    pygame.init()
+
+    # Create windows
+    window = pygame.display.set_mode(RESOLUTION)
+    pygame.display.set_caption("Collision Game")
+    speed = 10
+
+    # Define rect outside the loop to persist position
+    rect = pygame.Rect(50, 50, 50, 50)
+    player_color = (0, 0, 255)  # Blue color for the player rectangle
+    target = pygame.Rect(600, 300, 50, 50)
+
+    touching = False
+
+    #set up score and font for displaying score
+    score = 0
+    font = pygame.font.SysFont("Courier", 40)
+    clock = pygame.time.Clock()
+
+    running = True
+    while running:
+        # Clear screen each frame
+        window.fill((255, 255, 255))
+
+        # Draw rectangles
+        pygame.draw.rect(window, player_color, rect)
+        pygame.draw.rect(window, (0, 255, 0), target)   
+
+        #movement handling with arrow keys, with boundaries to prevent moving off-screen
+        keys = pygame.key.get_pressed()
+        if keys[pygame.K_LEFT]:
+            rect.x = max(0, rect.x - speed)
+
+        if keys[pygame.K_RIGHT]:
+            rect.x = min(RESOLUTION[0] - rect.width, rect.x + speed)
+
+        if keys[pygame.K_UP]:
+            rect.y = max(0, rect.y - speed)
+
+        if keys[pygame.K_DOWN]:
+            rect.y = min(RESOLUTION[1] - rect.height, rect.y + speed)
+
+        # Handle window close
+        for event in pygame.event.get():
+            if event.type == pygame.QUIT:  
+                running = False
+
+        #Collision detection
+        if rect.colliderect(target):
+            player_color = (255, 0, 0)
+
+            if not touching:
+                score += 1
+                #call for new target position function! 
+                target = move_target()
+                touching = True
+        else:
+            player_color = (0, 0, 255)
+            touching = False
+
+        # Font and score setup
+        score_text = font.render(f"Score: {score}", True, (0, 0, 0))
+        window.blit(score_text, (10, 10))  # Draw score at top left
+
+        # Update display each frame
+        pygame.display.update()
+        clock.tick(60)  # Limit to 60 frames per second
+
+    pygame.quit()
+
+#run da game
+main()
